@@ -1,0 +1,126 @@
+import math
+import os
+import PIL.Image as Image
+import PIL.ImageChops as ImageChops
+import PIL.ImageStat as ImageStat
+import subprocess
+import sys
+from os.path import basename
+
+def getBinaryDir():
+    """ Return the path from which the 'grabScreen' and 'convertToFlt' utils
+        must be run.  This is a hack included so that maybe this'll work on
+        OS X.  Visual Studio puts EXEs in 'Release' and 'Debug' folders under
+        ${CMAKE_BINARY_DIR}/bin, and CMake sets the 'LOCATION' property for
+        them to something like the following:
+        
+          C:/projects/Build/openflight_writer/bin/$(OutDir)/grabScreen.exe
+
+        So, the two dirty hacks are in this routine are:
+
+        1. If the path contains '$(OutDir)', we know we're building under Windows
+        2. If we know we're building under Windows, we assume that $(OutDir)
+           is 'Release'.  (The substitution of '$(OutDir)' with 'Release' should
+           fail harmlessly on OS X.)
+
+        That second hack means that the debug versions of the 'grabScreen'
+        and 'convertToFlt' binaries will never get run under Windows, even if
+        you run ctest with '-C Debug'.  Someday, I'll have to figure out how to
+        get ctest to pass info about which buld configuration it thinks it's
+        running to this script...
+
+    """
+    grabScreenPath = '@GRAB_SCREEN_EXE@'.replace('$(OutDir)', 'Release')
+    return os.path.dirname(grabScreenPath)
+
+
+def runProcess(argList):
+    """ Execute a process, capture its stdout/stderr to a pipe, print the
+        data sent down that pipe, and return the process's exit code... """
+
+    try:
+        child = subprocess.Popen(argList, bufsize=1,
+                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT,)
+    except OSError:
+        print "Failed to execute program '%s', error message is:" % (argList[0])
+        print "   ", sys.exc_info()[1]
+        sys.exit(-1)
+
+    while True:
+        line = child.stdout.readline()
+        if line:
+            print line,
+        else:
+            break
+
+    return child.wait()
+
+
+def convertToFlt(modelFileName):
+    """ Use the 'convertToFlt' executable to convert a model to FLT """
+    fltFileName = basename(modelFileName) + '.ofw.flt'
+    runProcess(['convertToFlt', modelFileName, fltFileName])
+    return fltFileName
+
+
+def captureScreen(modelFileName):
+    """ Use the 'grabScreen' executable to make a screen capture """
+    imageFileName = basename(modelFileName) + '.png'
+    runProcess(['grabScreen', modelFileName, imageFileName])
+    return imageFileName
+
+
+def calcPSNR(image1, image2):
+    """ Calculate peak signal-to-noise-ratio of the difference between image1
+        and image2 (see http://en.wikipedia.org/wiki/PSNR).  Returns 1,000,000
+        (instead of infinity) if the images are identical, otherwise returns
+        the PSNR in dB.  The higher the value, the more similar the images.
+    """
+    diff = ImageChops.difference(image1, image2)
+    istat = ImageStat.Stat(diff)
+    sqrtMSE = istat.rms[0]
+    psnr = 20.0 * math.log10(255.0 / sqrtMSE) if sqrtMSE != 0 else 1000*1000
+    return psnr
+
+
+if len(sys.argv) < 2 or len(sys.argv) > 3:
+    appName = basename(sys.argv[0])
+    print "%s - Convert a model to FLT and see if it's 'identical'" % appName
+    print "Usage: %s <modelFileName> [threshold=75 db]" % appName
+    sys.exit(-1)
+
+inputModelFile = sys.argv[1]
+
+# Set threshold PSNR (in dB) at which two images are considered 'identical'
+threshold = sys.argv[3] if len(sys.argv) == 4 else 75
+
+# Prepend dir containing test data to OSG_FILE_PATH
+ModelDir = '@TEST_DATA_DIR@'
+if not os.environ.has_key('OSG_FILE_PATH'):
+    os.environ['OSG_FILE_PATH'] = ModelDir
+else:
+    os.environ['OSG_FILE_PATH'] = ModelDir + os.pathsep + os.environ['OSG_FILE_PATH']
+
+os.chdir(getBinaryDir())
+
+# Convert the input model to FLT.  (This needs to be done even if it already
+# *is* FLT, since we want to round-trip it thru the exporter.)
+outputModelFile = convertToFlt(inputModelFile)
+
+# Create temp images of the input and output models
+inputImageName = captureScreen(inputModelFile)
+outputImageName = captureScreen(outputModelFile)
+
+im1 = Image.open(inputImageName)
+im2 = Image.open(outputImageName)
+
+psnr = calcPSNR(im1, im2)
+retval = 0 if psnr >= threshold else -1
+
+# Remove temporary files
+if psnr >= threshold:
+    os.unlink(inputImageName)
+    os.unlink(outputImageName)
+    os.unlink(outputModelFile)
+
+sys.exit(retval)

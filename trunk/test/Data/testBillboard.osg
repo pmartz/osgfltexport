@@ -1,0 +1,119 @@
+Group {
+  name "testBillboard.osg"
+  nodeMask 0xffffffff
+  cullingActive TRUE
+  num_children 2
+  Billboard {
+    DataVariance DYNAMIC
+    name "billboardtriangle"
+    nodeMask 0xffffffff
+    cullingActive TRUE
+    StateSet {
+      UniqueID StateSet_0
+      DataVariance STATIC
+      rendering_hint DEFAULT_BIN
+      renderBinMode INHERIT
+      GL_LIGHTING OFF
+    }
+    num_drawables 1
+    Geometry {
+      DataVariance DYNAMIC
+      StateSet {
+        DataVariance STATIC
+        rendering_hint DEFAULT_BIN
+        renderBinMode INHERIT
+        textureUnit 0 {
+          GL_TEXTURE_2D ON
+          Texture2D {
+            file "OSGRoolz.tif"
+            wrap_s CLAMP
+            wrap_t CLAMP
+            wrap_r CLAMP
+            min_filter LINEAR_MIPMAP_LINEAR
+            mag_filter LINEAR
+            maxAnisotropy 1
+            borderColor 0 0 0 0
+            borderWidth 0
+            useHardwareMipMapGeneration TRUE
+            unRefImageDataAfterApply TRUE
+            internalFormatMode USE_IMAGE_DATA_FORMAT
+            resizeNonPowerOfTwo TRUE
+          }
+        }
+      }
+      useDisplayList TRUE
+      useVertexBufferObjects FALSE
+      PrimitiveSets 1
+      {
+        DrawArrays TRIANGLES 0 3
+      }
+      VertexArray Vec3Array 3
+      {
+        -1 0 -1
+        1 0 -1
+        0 0 2
+      }
+      NormalBinding PER_VERTEX
+      NormalArray Vec3Array 3
+      {
+        0 -1 0
+        0 -1 0
+        0 -1 0
+      }
+      ColorBinding OVERALL
+      ColorArray Vec4Array 1
+      {
+        0 0 1 1
+      }
+      TexCoordArray 0 Vec2Array 3
+      {
+        -0.1 0.3
+        1.1 0.3
+        0.5 1
+      }
+    }
+    Mode AXIAL_ROT
+    Axis 0 0 1
+    Normal 0 -1 0
+    Positions {
+      0 0 0
+    }
+  }
+  Geode {
+    DataVariance DYNAMIC
+    name "basequad"
+    nodeMask 0xffffffff
+    cullingActive TRUE
+    Use StateSet_0
+    num_drawables 1
+    Geometry {
+      DataVariance DYNAMIC
+      useDisplayList TRUE
+      useVertexBufferObjects FALSE
+      PrimitiveSets 1
+      {
+        DrawArrays QUADS 0 4
+      }
+      VertexArray Vec3Array 4
+      {
+        -1.5 -1.5 -1.25
+        1.5 -1.5 -1.25
+        1.5 1.5 -1.25
+        -1.5 1.5 -1.25
+      }
+      NormalBinding PER_VERTEX
+      NormalArray Vec3Array 4
+      {
+        0 0 1
+        0 0 1
+        0 0 1
+        0 0 1
+      }
+      ColorBinding OVERALL
+      ColorArray Vec4Array 1
+      {
+        1 1 1 1
+      }
+    }
+  }
+}

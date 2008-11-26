@@ -1,0 +1,81 @@
+Group {
+  UniqueID Group_0
+  nodeMask 0xffffffff
+  cullingActive TRUE
+  StateSet {
+    DataVariance STATIC
+    GL_LIGHTING OFF
+  }
+  num_children 1
+  Switch {
+    nodeMask 0xffffffff
+    cullingActive TRUE
+    NewChildDefaultValue 1
+    ValueList {
+      1
+      1
+      1
+    }
+    num_children 3
+    Geode {
+      UniqueID Geode_1
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      num_drawables 1
+      Geometry {
+        DataVariance DYNAMIC
+        useDisplayList TRUE
+        useVertexBufferObjects FALSE
+        PrimitiveSets 1
+        {
+          DrawElementsUInt QUADS 4
+          {
+            0 1 2 3 
+          }
+        }
+        VertexArray Vec3Array 4
+        {
+          0 0 0
+          1 0 0
+          1 0 1
+          0 0 1
+        }
+        ColorBinding PER_VERTEX
+        ColorArray Vec4Array 1
+        {
+          1 0 0 1
+          1 0 0 1
+          1 0 0 1
+          1 0 0 1
+        }
+      }
+    }
+    MatrixTransform {
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      referenceFrame RELATIVE
+      Matrix {
+        1 0 0 0
+        0 1 0 0
+        0 0 1 0
+        0 0 1.25 1
+      }
+      num_children 1
+      Use Geode_1
+    }
+
+    MatrixTransform {
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      referenceFrame RELATIVE
+      Matrix {
+        1 0 0 0
+        0 1 0 0
+        0 0 1 0
+        0 0 -1.25 1
+      }
+      num_children 1
+      Use Geode_1
+    }
+  }
+}
