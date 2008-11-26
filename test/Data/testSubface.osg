@@ -1,0 +1,94 @@
+Group {
+  nodeMask 0xffffffff
+  cullingActive TRUE
+  num_children 1
+  Group {
+    nodeMask 0xffffffff
+    cullingActive TRUE
+    StateSet {
+      rendering_hint DEFAULT_BIN
+      renderBinMode INHERIT
+      GL_LIGHTING OVERRIDE|OFF
+    }
+    num_children 2
+    Geode {
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      num_drawables 1
+      Geometry {
+        useDisplayList TRUE
+        useVertexBufferObjects FALSE
+        PrimitiveSets 1
+        {
+          DrawArrays QUADS 0 4
+        }
+        VertexArray Vec3Array 4
+        {
+          -2 0 -2
+          2 0 -2
+          2 0 2
+          -2 0 2
+        }
+        ColorBinding OVERALL
+        ColorArray Vec4Array 1
+        {
+          1 1 1 1
+        }
+        TexCoordArray 0 UniqueID Vec2Array_0 Vec2Array 4
+        {
+          0 0
+          1 0
+          1 1
+          0 1
+        }
+        TexCoordArray 1 Use Vec2Array_0
+      }
+    }
+    Geode {
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      num_drawables 1
+      Geometry {
+        StateSet {
+          rendering_hint DEFAULT_BIN
+          renderBinMode USE
+          binNumber 1
+          binName RenderBin
+          GL_POLYGON_OFFSET_POINT ON
+          GL_POLYGON_OFFSET_LINE ON
+          GL_POLYGON_OFFSET_FILL ON
+          PolygonOffset {
+            factor -1
+            units  -1
+          }
+        }
+        useDisplayList TRUE
+        useVertexBufferObjects FALSE
+        PrimitiveSets 1
+        {
+          DrawArrays QUADS 0 4
+        }
+        VertexArray Vec3Array 4
+        {
+          -1 0 -1
+          1 0 -1
+          1 0 1
+          -1 0 1
+        }
+        ColorBinding OVERALL
+        ColorArray Vec4Array 1
+        {
+          1 0 0 1
+        }
+        TexCoordArray 0 UniqueID Vec2Array_1 Vec2Array 4
+        {
+          0 0
+          1 0
+          1 1
+          0 1
+        }
+        TexCoordArray 1 Use Vec2Array_1
+      }
+    }
+  }
+}

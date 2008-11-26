@@ -1,0 +1,42 @@
+Geode {
+  DataVariance DYNAMIC
+  name "fltTest00.osg"
+  nodeMask 0xffffffff
+  cullingActive TRUE
+  StateSet {
+    DataVariance STATIC
+    GL_LIGHTING OFF
+  }
+  num_drawables 1
+  Geometry {
+    DataVariance DYNAMIC
+    useDisplayList TRUE
+    useVertexBufferObjects FALSE
+    PrimitiveSets 1
+    {
+      DrawArrays POLYGON 0 5
+    }
+    VertexArray Vec3Array 5
+    {
+      -1 0 -1
+      1 0 -1
+      1 0 1
+      0 0 1.25
+      -1 0 1
+    }
+    NormalBinding PER_VERTEX
+    NormalArray Vec3Array 5
+    {
+      0 -1 0
+      0 -1 0
+      0 -1 0
+      0 -1 0
+      0 -1 0
+    }
+    ColorBinding OVERALL
+    ColorArray Vec4Array 1
+    {
+      .4981 .4981 1 1
+    }
+  }
+}
