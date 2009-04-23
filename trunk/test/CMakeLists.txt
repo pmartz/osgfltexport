@@ -31,6 +31,8 @@ IF ( WIN32 )
                                osgGA
                              optimized
                                osgViewer
+                             optimized
+                               OpenThreads
                              debug
                                osgd
                              debug
@@ -38,17 +40,23 @@ IF ( WIN32 )
                              debug
                                osgGAd
                              debug
-                               osgViewerd )
+                               osgViewerd
+                             debug
+                               OpenThreadsd )
 
     TARGET_LINK_LIBRARIES( convertToFlt
                              optimized
                                osg
                              optimized
                                osgDB
+                             optimized
+                               OpenThreads
                              debug
                                osgd
                              debug
-                               osgDBd )
+                               osgDBd
+                             debug
+                               OpenThreadss )
 
 ELSE ( WIN32 )
     TARGET_LINK_LIBRARIES( grabScreen
@@ -57,14 +65,16 @@ ELSE ( WIN32 )
                              osgDB
                              osgGA
                              osgSim
-                             osgViewer )
+                             osgViewer
+                             OpenThreads )
 
     TARGET_LINK_LIBRARIES( convertToFlt
                              osg
                              osgDB
                              osgGA
                              osgSim
-                             osgViewer )
+                             osgViewer
+                             OpenThreads )
 ENDIF( WIN32 )
 
 
