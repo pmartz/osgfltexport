@@ -56,7 +56,7 @@ IF ( WIN32 )
                              debug
                                osgDBd
                              debug
-                               OpenThreadss )
+                               OpenThreadsd )
 
 ELSE ( WIN32 )
     TARGET_LINK_LIBRARIES( grabScreen
