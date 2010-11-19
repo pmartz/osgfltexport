@@ -25,4 +25,5 @@ The following people contributed to this regression test suite by writing the fr
  * Dr. Neil Hughes / Logicom Computer Services, UK
  * Bob Kuehne
  * Paul Martz
+ * Katharina Plugge
  * Dave Wolfe

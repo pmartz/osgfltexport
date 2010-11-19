@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.6)
 PROJECT(OpenFlightWriter)
 
 # Add path containing our custom CMake modules
