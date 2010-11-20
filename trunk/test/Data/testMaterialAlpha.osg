@@ -34,30 +34,7 @@ Group {
           mode BACK
         }
       }
-      num_drawables 2
-      Geometry {
-        DataVariance STATIC
-        useDisplayList TRUE
-        useVertexBufferObjects FALSE
-        PrimitiveSets 1
-        {
-          DrawArrays POINTS 0 1
-        }
-        VertexArray Vec3Array 1
-        {
-          0 0 0
-        }
-        NormalBinding OVERALL
-        NormalArray Vec3Array 1
-        {
-          0 0 1
-        }
-        ColorBinding OVERALL
-        ColorArray Vec4Array 1
-        {
-          1 1 1 1
-        }
-      }
+      num_drawables 1
       Geometry {
         DataVariance STATIC
         useDisplayList TRUE
@@ -371,9 +348,8 @@ Group {
           DataVariance STATIC
           useDisplayList TRUE
           useVertexBufferObjects FALSE
-          PrimitiveSets 2
+          PrimitiveSets 1
           {
-            DrawArrays POINTS 0 1
             DrawArrays TRIANGLES 1 3
           }
           VertexArray Vec3Array 4
