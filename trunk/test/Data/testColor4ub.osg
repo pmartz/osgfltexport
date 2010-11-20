@@ -8,6 +8,14 @@ MatrixTransform {
     rendering_hint DEFAULT_BIN
     renderBinMode INHERIT
     GL_CULL_FACE OVERRIDE|ON
+    Material {
+      ColorMode OFF
+      ambientColor 0.2 0.2 0.2 1
+      diffuseColor 0.8 0.8 0.8 1
+      specularColor 0 0 0 1
+      emissionColor 0 0 0 1
+      shininess 0
+    }
     CullFace {
       DataVariance STATIC
       mode BACK
@@ -393,7 +401,7 @@ MatrixTransform {
                         }
                         ColorBinding OVERALL
                         ColorArray Vec4ubArray 1                         {
-                          255 255 255 255
+                          255 0 128 255
                         }
                       }
                     }

@@ -12,13 +12,27 @@ Group {
       name "rack"
       nodeMask 0xffffffff
       cullingActive TRUE
+      StateSet {
+        DataVariance STATIC
+        rendering_hint DEFAULT_BIN
+        renderBinMode INHERIT
+        GL_CULL_FACE OFF
+        GL_LIGHTING ON
+        Material {
+          ColorMode OFF
+          ambientColor 0.2 0.2 0.2 1
+          diffuseColor 0.8 0.8 0.8 1
+          specularColor 0 0 0 1
+          emissionColor 0 0 0 1
+          shininess 0
+        }
+      }
       num_children 1
       Geode {
         DataVariance STATIC
         name "p35334_1"
         nodeMask 0xffffffff
         cullingActive TRUE
-        Use StateSet_0
         num_drawables 1
         Geometry {
           DataVariance STATIC
