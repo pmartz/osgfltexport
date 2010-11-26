@@ -1,5 +1,5 @@
 #include <iostream>
-#include <osg/notify>
+#include <osg/Notify>
 #include <osgDB/ReadFile>
 #include <osgDB/WriteFile>
 
