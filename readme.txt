@@ -11,7 +11,13 @@ Build:
  * Build everything in the project.
 
 Run:
-Build the RUN_TESTS project.
+This project uses CTest:
+http://www.vtk.org/Wiki/CMake_Testing_With_CTest
+
+In Visual Studio, build the RUN_TESTS project.
+
+From a Linux/Unix shell:
+    make test
 
 The regression test suite uses the grabScreen executable to load various .osg/.flt files and capture a screenshot. Then it invokes the convertToFlt executable to export the scene graph as a FLT file. It again uses grabScreen to load the converted FLT file and capture its image. Finally, it uses the PSNR function in PIL to compare the images. If they are significantly different, the test fails, and otherwise passes.
 
