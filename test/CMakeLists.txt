@@ -1,12 +1,14 @@
 FIND_PACKAGE( OpenGL REQUIRED )
 FIND_PACKAGE( PythonInterp REQUIRED )
 
-# Util program for grabbing a screen shot of a model
-ADD_EXECUTABLE(grabScreen grabScreen.cpp)
 
+# Util program for grabbing a screen shot of a model
+ADD_EXECUTABLE( grabScreen grabScreen.cpp )
+TARGET_LINK_LIBRARIES( grabScreen ${OSG_LIBRARIES} )
 
 # Util program for converting a model to FLT
-ADD_EXECUTABLE(convertToFlt convertToFlt.cpp)
+ADD_EXECUTABLE( convertToFlt convertToFlt.cpp )
+TARGET_LINK_LIBRARIES( convertToFlt ${OSG_LIBRARIES} )
 
 
 # Set some 'cheater' vars to help the convertAndCompare.py.in template
@@ -14,68 +16,11 @@ ADD_EXECUTABLE(convertToFlt convertToFlt.cpp)
 GET_TARGET_PROPERTY(GRAB_SCREEN_EXE grabScreen LOCATION)
 SET( TEST_DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Data" )
 
-
 # Copy before-and-after conversion/comparison script to binary dir,
 # substituting variables along the way
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/convertAndCompare.py.in
                ${CMAKE_CURRENT_BINARY_DIR}/convertAndCompare.py
                @ONLY)
-
-IF ( WIN32 )
-    TARGET_LINK_LIBRARIES( grabScreen
-                             optimized
-                               osg
-                             optimized
-                               osgDB
-                             optimized
-                               osgGA
-                             optimized
-                               osgViewer
-                             optimized
-                               OpenThreads
-                             debug
-                               osgd
-                             debug
-                               osgDBd
-                             debug
-                               osgGAd
-                             debug
-                               osgViewerd
-                             debug
-                               OpenThreadsd )
-
-    TARGET_LINK_LIBRARIES( convertToFlt
-                             optimized
-                               osg
-                             optimized
-                               osgDB
-                             optimized
-                               OpenThreads
-                             debug
-                               osgd
-                             debug
-                               osgDBd
-                             debug
-                               OpenThreadsd )
-
-ELSE ( WIN32 )
-    TARGET_LINK_LIBRARIES( grabScreen
-                            ${OPENGL_LIBRARIES}
-                             osg
-                             osgDB
-                             osgGA
-                             osgSim
-                             osgViewer
-                             OpenThreads )
-
-    TARGET_LINK_LIBRARIES( convertToFlt
-                             osg
-                             osgDB
-                             osgGA
-                             osgSim
-                             osgViewer
-                             OpenThreads )
-ENDIF( WIN32 )
 
 
 # Helper macro to clean up the test decls
