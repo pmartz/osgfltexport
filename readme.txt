@@ -10,6 +10,12 @@ Build:
  * Use CMake to generate project files for your platform.
  * Build everything in the project.
 
+   Finding OSG in CMake:
+   This project uses a custom CMake script to aid in building the project with different OSG binaries. The CMake variable *OSGInstallType* can be set one of three ways:
+    * Default Installation: CMake will use OSG installed into the default location on your system.
+    * Alternate Install Location: Select this option, then provide the install location root directory, to use OSG from a non-default install location.
+    * Source And Build Tree: Select this option, then provide the OSG source and build directories, to use OSG built from a source tree.
+
 Run:
 This project uses CTest:
 http://www.vtk.org/Wiki/CMake_Testing_With_CTest
